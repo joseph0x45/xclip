@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// will be false if xclip is not installed on the host
 var Unsupported bool = false
 
 func init() {
@@ -17,6 +18,8 @@ func init() {
 	}
 }
 
+// Sends `text` into the clipboard.
+// Returns an error if operation failed or xclip is not installed
 func CopyToClipboard(text string) error {
 	if Unsupported {
 		return errors.New("xclip is not installed")
@@ -26,6 +29,7 @@ func CopyToClipboard(text string) error {
 	return cmd.Run()
 }
 
+// Reads the current value of the clipboard.
 func ReadFromClipboard() (string, error) {
 	if Unsupported {
 		return "", errors.New("xclip is not installed")
